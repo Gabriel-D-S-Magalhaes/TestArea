@@ -1,0 +1,391 @@
+{
+  "response": {
+    "version": "0.1",
+    "termsofService": "http://www.wunderground.com/weather/api/d/terms.html",
+    "features": {
+      "forecast": 1
+    }
+  },
+  "forecast": {
+    "txt_forecast": {
+      "date": "12:06 -02",
+      "forecastday": [
+        {
+          "period": 0,
+          "icon": "chancetstorms",
+          "icon_url": "http://icons.wxug.com/i/c/k/chancetstorms.gif",
+          "title": "Terça-feira",
+          "fcttext": "Trovoadas esporádicas. Máxima de 82°F. Ventos NO a 10 a 20 mph. Possib. de chuva 40%.",
+          "fcttext_metric": "Trovoadas esporádicas. Máxima de 29°C. Ventos NO a 15 a 30 km/h. Possib. de chuva 40%.",
+          "pop": "40"
+        },
+        {
+          "period": 1,
+          "icon": "nt_mostlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/nt_mostlycloudy.gif",
+          "title": "Terça à noite",
+          "fcttext": "Muito nublado. Mínima 70°F. Ventos NO a 10 a 20 mph.",
+          "fcttext_metric": "Muito nublado. Mínima 22°C. Ventos NO a 15 a 30 km/h.",
+          "pop": "20"
+        },
+        {
+          "period": 2,
+          "icon": "rain",
+          "icon_url": "http://icons.wxug.com/i/c/k/rain.gif",
+          "title": "Quarta-feira",
+          "fcttext": "Chuva e trovoada. Máxima de 76°F. Ventos ONO a 10 a 15 mph. Possib. de chuva 70%. Chuva cerca de 1 polegada.",
+          "fcttext_metric": "Trovoadas. Máxima de 24°C. Ventos ONO a 15 a 25 km/h. Possib. de chuva 80%. Chuva cerca de 25 mm.",
+          "pop": "70"
+        },
+        {
+          "period": 3,
+          "icon": "nt_chancerain",
+          "icon_url": "http://icons.wxug.com/i/c/k/nt_chancerain.gif",
+          "title": "Quarta à noite",
+          "fcttext": "Aguaceiros ao início do dia. Mínima 64°F. Ventos S a 10 a 15 mph. Possib. de chuva 50%.",
+          "fcttext_metric": "Aguaceiros ao início do dia. Mínima 18°C. Ventos S a 10 a 15 km/h. Possib. de chuva 50%.",
+          "pop": "50"
+        },
+        {
+          "period": 4,
+          "icon": "partlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/partlycloudy.gif",
+          "title": "Quinta-feira",
+          "fcttext": "Parcialmente nublado. Máxima de 76°F. Ventos SSE a 10 a 15 mph.",
+          "fcttext_metric": "Parcialmente nublado. Máxima de 25°C. Ventos SSE a 15 a 25 km/h.",
+          "pop": "10"
+        },
+        {
+          "period": 5,
+          "icon": "nt_partlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/nt_partlycloudy.gif",
+          "title": "Quinta à noite",
+          "fcttext": "Parcialmente nublado. Mínima 60°F. Ventos ESE a 10 a 15 mph.",
+          "fcttext_metric": "Parcialmente nublado. Mínima 16°C. Ventos ESE a 15 a 25 km/h.",
+          "pop": "10"
+        },
+        {
+          "period": 6,
+          "icon": "partlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/partlycloudy.gif",
+          "title": "Sexta-feira",
+          "fcttext": "Parcialmente nublado. Máxima de 78°F. Ventos ESE a 10 a 15 mph.",
+          "fcttext_metric": "Parcialmente nublado. Máxima de 26°C. Ventos ESE a 15 a 25 km/h.",
+          "pop": "10"
+        },
+        {
+          "period": 7,
+          "icon": "nt_partlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/nt_partlycloudy.gif",
+          "title": "Sexta à noite",
+          "fcttext": "Parcialmente nublado. Mínima 66°F. Ventos ENE a 5 a 10 mph.",
+          "fcttext_metric": "Parcialmente nublado. Mínima 19°C. Ventos ENE a 10 a 15 km/h.",
+          "pop": "20"
+        }
+      ]
+    },
+    "simpleforecast": {
+      "forecastday": [
+        {
+          "date": {
+            "epoch": "1514926800",
+            "pretty": "07:00 PM -02 em 02 de Janeiro de 2018",
+            "day": 2,
+            "month": 1,
+            "year": 2018,
+            "yday": 1,
+            "hour": 19,
+            "min": "00",
+            "sec": 0,
+            "isdst": "1",
+            "monthname": "Janeiro",
+            "monthname_short": "Jan",
+            "weekday_short": "Ter",
+            "weekday": "Terça-feira",
+            "ampm": "PM",
+            "tz_short": "-02",
+            "tz_long": "America/Sao_Paulo"
+          },
+          "period": 1,
+          "high": {
+            "fahrenheit": "82",
+            "celsius": "28"
+          },
+          "low": {
+            "fahrenheit": "70",
+            "celsius": "21"
+          },
+          "conditions": "Possibilidade de Trovoada",
+          "icon": "chancetstorms",
+          "icon_url": "http://icons.wxug.com/i/c/k/chancetstorms.gif",
+          "skyicon": "",
+          "pop": 40,
+          "qpf_allday": {
+            "in": 0.06,
+            "mm": 2
+          },
+          "qpf_day": {
+            "in": 0.02,
+            "mm": 1
+          },
+          "qpf_night": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "snow_allday": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_day": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_night": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "maxwind": {
+            "mph": 20,
+            "kph": 32,
+            "dir": "NO",
+            "degrees": 314
+          },
+          "avewind": {
+            "mph": 15,
+            "kph": 24,
+            "dir": "NO",
+            "degrees": 314
+          },
+          "avehumidity": 64,
+          "maxhumidity": 0,
+          "minhumidity": 0
+        },
+        {
+          "date": {
+            "epoch": "1515013200",
+            "pretty": "07:00 PM -02 em 03 de Janeiro de 2018",
+            "day": 3,
+            "month": 1,
+            "year": 2018,
+            "yday": 2,
+            "hour": 19,
+            "min": "00",
+            "sec": 0,
+            "isdst": "1",
+            "monthname": "Janeiro",
+            "monthname_short": "Jan",
+            "weekday_short": "Qua",
+            "weekday": "Quarta-feira",
+            "ampm": "PM",
+            "tz_short": "-02",
+            "tz_long": "America/Sao_Paulo"
+          },
+          "period": 2,
+          "high": {
+            "fahrenheit": "76",
+            "celsius": "24"
+          },
+          "low": {
+            "fahrenheit": "64",
+            "celsius": "18"
+          },
+          "conditions": "Chuva",
+          "icon": "rain",
+          "icon_url": "http://icons.wxug.com/i/c/k/rain.gif",
+          "skyicon": "",
+          "pop": 70,
+          "qpf_allday": {
+            "in": 1.35,
+            "mm": 34
+          },
+          "qpf_day": {
+            "in": 1.09,
+            "mm": 28
+          },
+          "qpf_night": {
+            "in": 0.26,
+            "mm": 7
+          },
+          "snow_allday": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_day": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_night": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "maxwind": {
+            "mph": 15,
+            "kph": 24,
+            "dir": "ONO",
+            "degrees": 289
+          },
+          "avewind": {
+            "mph": 12,
+            "kph": 19,
+            "dir": "ONO",
+            "degrees": 289
+          },
+          "avehumidity": 84,
+          "maxhumidity": 0,
+          "minhumidity": 0
+        },
+        {
+          "date": {
+            "epoch": "1515099600",
+            "pretty": "07:00 PM -02 em 04 de Janeiro de 2018",
+            "day": 4,
+            "month": 1,
+            "year": 2018,
+            "yday": 3,
+            "hour": 19,
+            "min": "00",
+            "sec": 0,
+            "isdst": "1",
+            "monthname": "Janeiro",
+            "monthname_short": "Jan",
+            "weekday_short": "Qui",
+            "weekday": "Quinta-feira",
+            "ampm": "PM",
+            "tz_short": "-02",
+            "tz_long": "America/Sao_Paulo"
+          },
+          "period": 3,
+          "high": {
+            "fahrenheit": "76",
+            "celsius": "24"
+          },
+          "low": {
+            "fahrenheit": "60",
+            "celsius": "16"
+          },
+          "conditions": "Parcialmente Nublado",
+          "icon": "partlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/partlycloudy.gif",
+          "skyicon": "",
+          "pop": 10,
+          "qpf_allday": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "qpf_day": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "qpf_night": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "snow_allday": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_day": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_night": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "maxwind": {
+            "mph": 15,
+            "kph": 24,
+            "dir": "SSE",
+            "degrees": 157
+          },
+          "avewind": {
+            "mph": 12,
+            "kph": 19,
+            "dir": "SSE",
+            "degrees": 157
+          },
+          "avehumidity": 69,
+          "maxhumidity": 0,
+          "minhumidity": 0
+        },
+        {
+          "date": {
+            "epoch": "1515186000",
+            "pretty": "07:00 PM -02 em 05 de Janeiro de 2018",
+            "day": 5,
+            "month": 1,
+            "year": 2018,
+            "yday": 4,
+            "hour": 19,
+            "min": "00",
+            "sec": 0,
+            "isdst": "1",
+            "monthname": "Janeiro",
+            "monthname_short": "Jan",
+            "weekday_short": "Sex",
+            "weekday": "Sexta-feira",
+            "ampm": "PM",
+            "tz_short": "-02",
+            "tz_long": "America/Sao_Paulo"
+          },
+          "period": 4,
+          "high": {
+            "fahrenheit": "78",
+            "celsius": "26"
+          },
+          "low": {
+            "fahrenheit": "66",
+            "celsius": "19"
+          },
+          "conditions": "Parcialmente Nublado",
+          "icon": "partlycloudy",
+          "icon_url": "http://icons.wxug.com/i/c/k/partlycloudy.gif",
+          "skyicon": "",
+          "pop": 10,
+          "qpf_allday": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "qpf_day": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "qpf_night": {
+            "in": 0.00,
+            "mm": 0
+          },
+          "snow_allday": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_day": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "snow_night": {
+            "in": 0.0,
+            "cm": 0.0
+          },
+          "maxwind": {
+            "mph": 15,
+            "kph": 24,
+            "dir": "ESE",
+            "degrees": 117
+          },
+          "avewind": {
+            "mph": 11,
+            "kph": 18,
+            "dir": "ESE",
+            "degrees": 117
+          },
+          "avehumidity": 70,
+          "maxhumidity": 0,
+          "minhumidity": 0
+        }
+      ]
+    }
+  }
+}
+
+
+

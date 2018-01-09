@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vivacity.com.br.testarea.MainActivity">
+
+    <!--Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:onClick="search"
+        android:text="SEARCH"/-->
+
+    <Button
+        android:id="@+id/btn_wheel_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TURN"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="wheelControl"/>
+
+    <!--ImageView
+        android:id="@+id/forecast_weather_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src=""/-->
+
+</RelativeLayout>
