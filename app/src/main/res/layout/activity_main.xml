@@ -20,7 +20,7 @@
         android:text="TURN"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="wheelControl"/>
+        android:onClick="onClickView"/>
 
     <!--ImageView
         android:id="@+id/forecast_weather_icon"
