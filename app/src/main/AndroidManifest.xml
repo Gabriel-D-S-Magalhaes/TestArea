@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".SearchSoundSourceActivity"></activity>
         <meta-data android:name="RECOGNIZE_MODE" android:value="1"/>
+        <meta-data android:name="FORBID_PIR" android:value="true"/>
     </application>
 
 </manifest>
