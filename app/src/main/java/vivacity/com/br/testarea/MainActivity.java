@@ -45,11 +45,6 @@ public class MainActivity extends TopBaseActivity {
         speechManager = (SpeechManager) getUnitManager(FuncConstant.SPEECH_MANAGER);
     }
 
-    @Override
-    protected void onMainServiceConnected() {
-
-    }
-
     public void search(View view) {
         Runnable runnable = new Runnable() {
             @Override
@@ -83,8 +78,6 @@ public class MainActivity extends TopBaseActivity {
     }
 
     public void searchSoundSource() {
-        // Necessário despertar o robô para usar o método VoiceLocateListener.voiceLocateResult
-        // @deprecated speechManager.doWakeUp();
 
         // Sound source localization event will be callback when robot has been awaken.
         hardWareManager.setOnHareWareListener(new VoiceLocateListener() {
@@ -116,29 +109,10 @@ public class MainActivity extends TopBaseActivity {
                 }
             }
         });
+    }
 
-        // Para capturar o momento que o robô foi despertado
-        speechManager.setOnSpeechListener(new WakenListener() {
+    @Override
+    protected void onMainServiceConnected() {
 
-            // Awaken Event Occurred
-            @Override
-            public void onWakeUp() {
-
-                Log.i(TAG, "Awaken Event Occurred");
-
-                // Info ao user
-                Toast.makeText(MainActivity.this, "Awaken Event Occurred", Toast.LENGTH_SHORT).show();
-            }
-
-            // Sleep Event Occurred
-            @Override
-            public void onSleep() {
-
-                Log.i(TAG, "Sleep Event Occurred");
-
-                // Info ao user
-                Toast.makeText(MainActivity.this, "Sleep Event Occurred", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
