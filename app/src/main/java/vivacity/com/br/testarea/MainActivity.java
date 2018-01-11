@@ -15,6 +15,7 @@ import com.qihancloud.opensdk.function.beans.wheelmotion.RelativeAngleWheelMotio
 import com.qihancloud.opensdk.function.unit.HardWareManager;
 import com.qihancloud.opensdk.function.unit.SpeechManager;
 import com.qihancloud.opensdk.function.unit.WheelMotionManager;
+import com.qihancloud.opensdk.function.unit.interfaces.hardware.PIRListener;
 import com.qihancloud.opensdk.function.unit.interfaces.hardware.VoiceLocateListener;
 import com.qihancloud.opensdk.function.unit.interfaces.speech.RecognizeListener;
 
@@ -32,6 +33,7 @@ public class MainActivity extends TopBaseActivity {
     private static final int FULL_ANGLE = 360;
 
     private int angleToTurn;
+    private boolean detectedHuman = false;
 
     Listerning listerning = new Listerning();
 
@@ -76,10 +78,14 @@ public class MainActivity extends TopBaseActivity {
     }
 
     /**
-     * @param view Responsável por virar o Sanbot na direção da fonte de som.
+     * @param view
      */
-    public void wheelControl(View view) {
-        heardSanbot();
+    public void onClickView(View view) {
+        switch (view.getId()) {
+            case R.id.btn_wheel_control:
+                heardSanbot();
+                break;
+        }
     }
 
     public void searchSoundSource() {
@@ -151,11 +157,34 @@ public class MainActivity extends TopBaseActivity {
 
     }
 
+    public void detectHuman() {
+        hardWareManager.setOnHareWareListener(new PIRListener() {
+            @Override
+            public void onPIRCheckResult(boolean b, int i) {
+
+                System.out.print((i == 1 ? "Front of the body" : "Back of the body") + "PIR has been triggered");
+
+                if (b) {
+                    detectedHuman = true;
+                    switch (i) {
+                        case 1:
+                            Log.i(TAG, "PIR detectou um corpo humano ");
+                            Toast.makeText(MainActivity.this, "PIR detectou um corpo humano a frente", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2:
+                            Log.i(TAG, "PIR detectou um corpo humano");
+                            Toast.makeText(MainActivity.this, "PIR detectou um corpo humano atrás", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     protected void onMainServiceConnected() {
 
     }
-
 
     class Listerning extends AsyncTask<Void, Void, Void> {
 
@@ -179,6 +208,7 @@ public class MainActivity extends TopBaseActivity {
         protected Void doInBackground(Void... voids) {
             Log.i(TAG, "doInBackground running");
             searchSoundSource();
+            detectHuman();
             return null;
         }
 
