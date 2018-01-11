@@ -2,15 +2,21 @@ package vivacity.com.br.testarea;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
+import com.qihancloud.opensdk.beans.OperationResult;
 import com.qihancloud.opensdk.function.beans.speech.Grammar;
+import com.qihancloud.opensdk.function.beans.wheelmotion.DistanceWheelMotion;
+import com.qihancloud.opensdk.function.beans.wheelmotion.NoAngleWheelMotion;
 import com.qihancloud.opensdk.function.beans.wheelmotion.RelativeAngleWheelMotion;
 import com.qihancloud.opensdk.function.unit.HardWareManager;
 import com.qihancloud.opensdk.function.unit.SpeechManager;
@@ -32,10 +38,18 @@ public class MainActivity extends TopBaseActivity {
     private static final String TAG = "MainActivity";
     private static final int FULL_ANGLE = 360;
 
+    private boolean heardSanbot = false;
     private int angleToTurn;
-    private boolean detectedHuman = false;
+    private boolean humanDetected = false;
 
     Listerning listerning = new Listerning();
+
+    //Info for user
+    TextView tv_sound_source_info;
+    TextView tv_tts_info;
+    TextView tv_turn_sanbot_info;
+    TextView tv_human_detected_info;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +64,11 @@ public class MainActivity extends TopBaseActivity {
         hardWareManager = (HardWareManager) getUnitManager(FuncConstant.HARDWARE_MANAGER);
         wheelMotionManager = (WheelMotionManager) getUnitManager(FuncConstant.WHEELMOTION_MANAGER);
         speechManager = (SpeechManager) getUnitManager(FuncConstant.SPEECH_MANAGER);
+
+        tv_sound_source_info = (TextView) findViewById(R.id.tv_sound_source_info);
+        tv_tts_info = (TextView) findViewById(R.id.tv_tts_info);
+        tv_turn_sanbot_info = (TextView) findViewById(R.id.tv_turn_sanbot_info);
+        tv_human_detected_info = (TextView) findViewById(R.id.tv_human_detected_info);
 
         listerning.execute();
     }
@@ -94,7 +113,7 @@ public class MainActivity extends TopBaseActivity {
         hardWareManager.setOnHareWareListener(new VoiceLocateListener() {
 
             /**
-             * Resultado da localizacão da fonte de som
+             * Localizacão da fonte de som
              * @param i = Angle refers to the angle offset of sound source and straight
              *          ahead of robot by clockwise.
              */
@@ -102,8 +121,8 @@ public class MainActivity extends TopBaseActivity {
             public void voiceLocateResult(int i) {
 
                 // Info para o user
-                //Toast.makeText(MainActivity.this, "Localizando fonte de som... a " + i + "º", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Localizando fonte de som...");
+                Log.i(TAG, "Fonte de som localizada a " + i + "º");
+                tv_sound_source_info.setText("\nFonte de som localizada a " + i + "º");
                 angleToTurn = i;
             }
         });
@@ -120,13 +139,25 @@ public class MainActivity extends TopBaseActivity {
 
                 if (!grammar.getText().isEmpty() && grammar.getText().contains("Robot")) {
 
+                    heardSanbot = true;
                     turnSanbot(angleToTurn);
-                    Log.i(TAG, "Ouviu Robot a " + angleToTurn + "º");
-                    Toast.makeText(MainActivity.this, "Ouviu Robot a " + angleToTurn + "º", Toast.LENGTH_SHORT).show();
+                    //walkToHuman(); see method turnSanbot
+
+                    // Print info
+                    Log.i(TAG, "Ouviu \"Robot\" a " + angleToTurn + "º");
+
+                    Toast.makeText(MainActivity.this,
+                            "Ouviu \"Robot\" a " + angleToTurn + "º", Toast.LENGTH_SHORT)
+                            .show();
+
+                    tv_tts_info.setText("Sanbot entendeu: " + grammar.getText());
+
                     return true;
                 }
 
                 Log.i(TAG, "Sanbot understood: " + grammar.getText());
+                tv_tts_info.setText("Sanbot entendeu: " + grammar.getText());
+
                 return false;
             }
 
@@ -139,46 +170,108 @@ public class MainActivity extends TopBaseActivity {
 
     public void turnSanbot(int angle) {
 
+        OperationResult operationResult = new OperationResult();
+
+        tv_turn_sanbot_info.setText("Virando a " + angle + "º");
+
         // Se o ângulo é até 180
         if (angle >= 0 && angle <= 180) {
 
             //então viro normalmente (sentido horário), para á direita.
-            wheelMotionManager.doRelativeAngleMotion(new RelativeAngleWheelMotion(
+            operationResult = wheelMotionManager.doRelativeAngleMotion(new RelativeAngleWheelMotion(
                     RelativeAngleWheelMotion.TURN_RIGHT, 10, angle));
+
+            tv_turn_sanbot_info.setText(
+                    "Description: " + operationResult.getDescription()
+                            + " Result: " + operationResult.getResult()
+                            + " Error code: " + operationResult.getErrorCode());
+
 
         } else if (angle > 180 && angle <= 360) {
 
-            // se o ângulo vai de 181 a 360 graus, então (para não ficar demorado
-            // virando no sentido horário), faço: 360 - angle e viro á esquerda.
-            wheelMotionManager.doRelativeAngleMotion(new RelativeAngleWheelMotion(
+            // Se o ângulo vai de 181 a 360 graus, então (para não ficar demorado virando no sentido
+            // horário), faço: 360 - angle e viro á esquerda.
+            operationResult = wheelMotionManager.doRelativeAngleMotion(new RelativeAngleWheelMotion(
                     RelativeAngleWheelMotion.TURN_LEFT, 10,
                     FULL_ANGLE - angle));
+
+            tv_turn_sanbot_info.setText(
+                    "Description: " + operationResult.getDescription()
+                            + " Result: " + operationResult.getResult()
+                            + " Error code: " + operationResult.getErrorCode());
+
         }
 
+        if (operationResult.getErrorCode() == 1) {
+
+            /*new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    tv_turn_sanbot_info.setText("Walking to human");
+                    //walkToHuman();
+                }
+            }, 5000);*/
+
+            new CountDownTimer(5000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    tv_turn_sanbot_info.setText("Walking to human in " + millisUntilFinished / 1000);
+                }
+
+                public void onFinish() {
+                    tv_turn_sanbot_info.setText("Walking...");
+                    walkToHuman();
+                    /**
+                     * Continuar daqui
+                     * */
+                }
+            }.start();
+        }
     }
 
     public void detectHuman() {
+
         hardWareManager.setOnHareWareListener(new PIRListener() {
             @Override
             public void onPIRCheckResult(boolean b, int i) {
 
-                System.out.print((i == 1 ? "Front of the body" : "Back of the body") + "PIR has been triggered");
-
                 if (b) {
-                    detectedHuman = true;
+                    humanDetected = true;
                     switch (i) {
                         case 1:
-                            Log.i(TAG, "PIR detectou um corpo humano ");
-                            Toast.makeText(MainActivity.this, "PIR detectou um corpo humano a frente", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,
+                                    "PIR detectou um corpo humano a frente.",
+                                    Toast.LENGTH_SHORT).show();
+
+                            Log.i(TAG, "PIR detectou um corpo humano a frente.");
                             break;
                         case 2:
-                            Log.i(TAG, "PIR detectou um corpo humano");
-                            Toast.makeText(MainActivity.this, "PIR detectou um corpo humano atrás", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,
+                                    "PIR detectou um corpo humano atrás.",
+                                    Toast.LENGTH_SHORT).show();
+
+                            Log.i(TAG, "PIR detectou um corpo humano atrás");
                             break;
                     }
+                } else {
+                    humanDetected = false;
                 }
+
+                tv_human_detected_info.setText("Humano detectado: " + humanDetected);
             }
         });
+    }
+
+    public void walkToHuman() {
+
+        DistanceWheelMotion distanceWheelMotion = new DistanceWheelMotion(
+                DistanceWheelMotion.ACTION_FORWARD_RUN, 5, 100);
+
+        wheelMotionManager.doDistanceMotion(distanceWheelMotion);
+        Toast.makeText(MainActivity.this, "Walking to human", Toast.LENGTH_SHORT)
+                .show();
+
     }
 
     @Override

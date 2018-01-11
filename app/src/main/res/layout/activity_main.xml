@@ -17,10 +17,38 @@
         android:id="@+id/btn_wheel_control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TURN"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="onClickView"/>
+        android:onClick="onClickView"
+        android:text="TURN" />
+
+    <TextView
+        android:id="@+id/tv_sound_source_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_wheel_control"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_tts_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_sound_source_info"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_turn_sanbot_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_tts_info"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_human_detected_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_turn_sanbot_info"
+        android:layout_centerHorizontal="true" />
 
     <!--ImageView
         android:id="@+id/forecast_weather_icon"
