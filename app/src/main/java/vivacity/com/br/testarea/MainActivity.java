@@ -3,7 +3,6 @@ package vivacity.com.br.testarea;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,19 +13,22 @@ import com.google.gson.GsonBuilder;
 import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
 import com.qihancloud.opensdk.beans.OperationResult;
+import com.qihancloud.opensdk.function.beans.FaceRecognizeBean;
 import com.qihancloud.opensdk.function.beans.SpeakOption;
 import com.qihancloud.opensdk.function.beans.speech.Grammar;
 import com.qihancloud.opensdk.function.beans.wheelmotion.DistanceWheelMotion;
-import com.qihancloud.opensdk.function.beans.wheelmotion.NoAngleWheelMotion;
 import com.qihancloud.opensdk.function.beans.wheelmotion.RelativeAngleWheelMotion;
 import com.qihancloud.opensdk.function.unit.HardWareManager;
+import com.qihancloud.opensdk.function.unit.MediaManager;
 import com.qihancloud.opensdk.function.unit.SpeechManager;
 import com.qihancloud.opensdk.function.unit.WheelMotionManager;
 import com.qihancloud.opensdk.function.unit.interfaces.hardware.PIRListener;
 import com.qihancloud.opensdk.function.unit.interfaces.hardware.VoiceLocateListener;
+import com.qihancloud.opensdk.function.unit.interfaces.media.FaceRecognizeListener;
 import com.qihancloud.opensdk.function.unit.interfaces.speech.RecognizeListener;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends TopBaseActivity {
 
@@ -36,6 +38,7 @@ public class MainActivity extends TopBaseActivity {
     private HardWareManager hardWareManager;
     private WheelMotionManager wheelMotionManager;
     private SpeechManager speechManager;
+    private MediaManager mediaManager;
 
     //Constants
     private static final String TAG = "MainActivity";
@@ -64,9 +67,11 @@ public class MainActivity extends TopBaseActivity {
 
         httpMethods = new HTTPMethods();
 
+        //Qihan SDK
         hardWareManager = (HardWareManager) getUnitManager(FuncConstant.HARDWARE_MANAGER);
         wheelMotionManager = (WheelMotionManager) getUnitManager(FuncConstant.WHEELMOTION_MANAGER);
         speechManager = (SpeechManager) getUnitManager(FuncConstant.SPEECH_MANAGER);
+        mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
 
         tv_sound_source_info = (TextView) findViewById(R.id.tv_sound_source_info);
         tv_tts_info = (TextView) findViewById(R.id.tv_tts_info);
@@ -105,7 +110,7 @@ public class MainActivity extends TopBaseActivity {
     public void onClickView(View view) {
         switch (view.getId()) {
             case R.id.btn_wheel_control:
-                heardSanbot();
+                //heardSanbot();
                 break;
         }
     }
@@ -274,9 +279,39 @@ public class MainActivity extends TopBaseActivity {
             speechManager.startSpeak(text, speakOption);
     }
 
+    public void recognizeFamilyMember() {
+
+        // Note: Internet connection is required for using this function
+        FaceRecognizeListener faceRecognizeListener = new FaceRecognizeListener() {
+
+            //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            @Override
+            public void recognizeResult(List<FaceRecognizeBean> list) {
+
+                /**
+                 * A sintaxe do for each é a seguinte:
+                 * for (tipo variavel_do_tipo_do_seuArray : seuArray) {
+                 *      //seu código
+                 * }
+                 */
+
+                for (FaceRecognizeBean faceRecognizeBean : list) {
+
+                    //System.out.println(gson.toJson(faceRecognizeBean));
+                    // Note: No app "Family" o tamanho min do nome é de 2 caracteres
+                    if (faceRecognizeBean.getUser().length() >= 2) {
+                        speak("Hello" + faceRecognizeBean.getUser());
+                    }
+                }
+            }
+        };
+
+        mediaManager.setMediaListener(faceRecognizeListener);
+    }
+
     @Override
     protected void onMainServiceConnected() {
-
     }
 
     class Listerning extends AsyncTask<Void, Void, Void> {
