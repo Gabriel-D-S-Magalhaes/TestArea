@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
 import com.qihancloud.opensdk.beans.OperationResult;
+import com.qihancloud.opensdk.function.beans.SpeakOption;
 import com.qihancloud.opensdk.function.beans.speech.Grammar;
 import com.qihancloud.opensdk.function.beans.wheelmotion.DistanceWheelMotion;
 import com.qihancloud.opensdk.function.beans.wheelmotion.NoAngleWheelMotion;
@@ -31,10 +32,12 @@ public class MainActivity extends TopBaseActivity {
 
     private HTTPMethods httpMethods;
 
+    //Qihan SDK
     private HardWareManager hardWareManager;
     private WheelMotionManager wheelMotionManager;
     private SpeechManager speechManager;
 
+    //Constants
     private static final String TAG = "MainActivity";
     private static final int FULL_ANGLE = 360;
 
@@ -141,7 +144,6 @@ public class MainActivity extends TopBaseActivity {
 
                     heardSanbot = true;
                     turnSanbot(angleToTurn);
-                    //walkToHuman(); see method turnSanbot
 
                     // Print info
                     Log.i(TAG, "Ouviu \"Robot\" a " + angleToTurn + "º");
@@ -155,6 +157,7 @@ public class MainActivity extends TopBaseActivity {
                     return true;
                 }
 
+                //Print info
                 Log.i(TAG, "Sanbot understood: " + grammar.getText());
                 tv_tts_info.setText("Sanbot entendeu: " + grammar.getText());
 
@@ -204,27 +207,17 @@ public class MainActivity extends TopBaseActivity {
 
         if (operationResult.getErrorCode() == 1) {
 
-            /*new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    tv_turn_sanbot_info.setText("Walking to human");
-                    //walkToHuman();
-                }
-            }, 5000);*/
-
             new CountDownTimer(5000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
+
                     tv_turn_sanbot_info.setText("Walking to human in " + millisUntilFinished / 1000);
                 }
 
                 public void onFinish() {
+
                     tv_turn_sanbot_info.setText("Walking...");
                     walkToHuman();
-                    /**
-                     * Continuar daqui
-                     * */
                 }
             }.start();
         }
@@ -271,7 +264,14 @@ public class MainActivity extends TopBaseActivity {
         wheelMotionManager.doDistanceMotion(distanceWheelMotion);
         Toast.makeText(MainActivity.this, "Walking to human", Toast.LENGTH_SHORT)
                 .show();
+    }
 
+    public void speak(String text) {
+
+        SpeakOption speakOption = new SpeakOption();
+        speakOption.setLanguageType(SpeakOption.LAG_ENGLISH_US);
+        if (!text.isEmpty() || !text.equals("") || !text.equals(" "))
+            speechManager.startSpeak(text, speakOption);
     }
 
     @Override
@@ -309,7 +309,6 @@ public class MainActivity extends TopBaseActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Log.i(TAG, "onPostExecute running");
-            //turnSanbot(integer);
         }
     }
 }
