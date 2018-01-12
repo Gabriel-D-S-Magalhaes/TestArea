@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
@@ -79,6 +80,10 @@ public class MainActivity extends TopBaseActivity {
         tv_human_detected_info = (TextView) findViewById(R.id.tv_human_detected_info);
 
         listerning.execute();
+    }
+
+    @Override
+    protected void onMainServiceConnected() {
     }
 
     public void search(View view) {
@@ -284,8 +289,6 @@ public class MainActivity extends TopBaseActivity {
         // Note: Internet connection is required for using this function
         FaceRecognizeListener faceRecognizeListener = new FaceRecognizeListener() {
 
-            //Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
             @Override
             public void recognizeResult(List<FaceRecognizeBean> list) {
 
@@ -298,7 +301,9 @@ public class MainActivity extends TopBaseActivity {
 
                 for (FaceRecognizeBean faceRecognizeBean : list) {
 
-                    //System.out.println(gson.toJson(faceRecognizeBean));
+                    // Maybe useful for the developer
+                    Log.i(TAG, new GsonBuilder().setPrettyPrinting().create().toJson(faceRecognizeBean));
+
                     // Note: No app "Family" o tamanho min do nome é de 2 caracteres
                     if (faceRecognizeBean.getUser().length() >= 2) {
                         speak("Hello" + faceRecognizeBean.getUser());
@@ -308,10 +313,6 @@ public class MainActivity extends TopBaseActivity {
         };
 
         mediaManager.setMediaListener(faceRecognizeListener);
-    }
-
-    @Override
-    protected void onMainServiceConnected() {
     }
 
     class Listerning extends AsyncTask<Void, Void, Void> {
@@ -337,6 +338,7 @@ public class MainActivity extends TopBaseActivity {
             Log.i(TAG, "doInBackground running");
             searchSoundSource();
             detectHuman();
+            recognizeFamilyMember();
             return null;
         }
 
