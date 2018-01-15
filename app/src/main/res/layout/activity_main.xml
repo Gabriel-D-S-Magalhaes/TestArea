@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:onClick="onClickView"
-        android:text="TURN" />
+        android:text="TESTE" />
 
     <TextView
         android:id="@+id/tv_sound_source_info"

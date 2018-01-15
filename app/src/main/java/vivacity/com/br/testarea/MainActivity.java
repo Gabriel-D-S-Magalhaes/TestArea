@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qihancloud.opensdk.base.TopBaseActivity;
 import com.qihancloud.opensdk.beans.FuncConstant;
@@ -21,6 +20,7 @@ import com.qihancloud.opensdk.function.beans.wheelmotion.DistanceWheelMotion;
 import com.qihancloud.opensdk.function.beans.wheelmotion.RelativeAngleWheelMotion;
 import com.qihancloud.opensdk.function.unit.HardWareManager;
 import com.qihancloud.opensdk.function.unit.MediaManager;
+import com.qihancloud.opensdk.function.unit.ProjectorManager;
 import com.qihancloud.opensdk.function.unit.SpeechManager;
 import com.qihancloud.opensdk.function.unit.WheelMotionManager;
 import com.qihancloud.opensdk.function.unit.interfaces.hardware.PIRListener;
@@ -40,6 +40,7 @@ public class MainActivity extends TopBaseActivity {
     private WheelMotionManager wheelMotionManager;
     private SpeechManager speechManager;
     private MediaManager mediaManager;
+    private ProjectorManager projectorManager;
 
     //Constants
     private static final String TAG = "MainActivity";
@@ -48,8 +49,9 @@ public class MainActivity extends TopBaseActivity {
     private boolean heardSanbot = false;
     private int angleToTurn;
     private boolean humanDetected = false;
+    private boolean projectoOn = false;
 
-    Listerning listerning = new Listerning();
+    Listening listening = new Listening();
 
     //Info for user
     TextView tv_sound_source_info;
@@ -73,13 +75,14 @@ public class MainActivity extends TopBaseActivity {
         wheelMotionManager = (WheelMotionManager) getUnitManager(FuncConstant.WHEELMOTION_MANAGER);
         speechManager = (SpeechManager) getUnitManager(FuncConstant.SPEECH_MANAGER);
         mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
+        projectorManager = (ProjectorManager) getUnitManager(FuncConstant.PROJECTOR_MANAGER);
 
         tv_sound_source_info = (TextView) findViewById(R.id.tv_sound_source_info);
         tv_tts_info = (TextView) findViewById(R.id.tv_tts_info);
         tv_turn_sanbot_info = (TextView) findViewById(R.id.tv_turn_sanbot_info);
         tv_human_detected_info = (TextView) findViewById(R.id.tv_human_detected_info);
 
-        listerning.execute();
+        listening.execute();
     }
 
     @Override
@@ -116,7 +119,86 @@ public class MainActivity extends TopBaseActivity {
         switch (view.getId()) {
             case R.id.btn_wheel_control:
                 //heardSanbot();
+                //takingControlOfProjector();
                 break;
+        }
+    }
+
+    /**
+     * To turn on/ off the projector. Note: Wait at least 12 second between each switch, otherwise
+     * the next command will not be executed.
+     */
+    private void takingControlOfProjector() {
+
+        if (isProjectoOn()) {
+            // O projetor será desligado.
+
+            new CountDownTimer(12000, 4000) {
+
+                /**
+                 * Callback fired on regular interval.
+                 *
+                 * @param millisUntilFinished The amount of time until finished.
+                 */
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                    Toast.makeText(MainActivity.this,
+                            "Aguarde " + millisUntilFinished / 1000 + "s para desligar o projetor."
+                            , Toast.LENGTH_SHORT).show();
+                }
+
+                /**
+                 * Callback fired when the time is up.
+                 */
+                @Override
+                public void onFinish() {
+
+                    Toast.makeText(MainActivity.this, "Desligando...",
+                            Toast.LENGTH_SHORT).show();
+
+                    // Desliga o projetor
+                    if (projectorManager.switchProjector(false).getErrorCode() == 1) {
+
+                        setProjectoOn(false);
+                    }
+                }
+            }.start();
+
+        } else if (!isProjectoOn()) {
+            // O Projetor será desligado.
+
+            new CountDownTimer(12000, 4000) {
+                /**
+                 * Callback fired on regular interval.
+                 *
+                 * @param millisUntilFinished The amount of time until finished.
+                 */
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                    Toast.makeText(MainActivity.this,
+                            "Aguarde " + millisUntilFinished / 1000 + "s para ligar o projetor."
+                            , Toast.LENGTH_SHORT).show();
+                }
+
+                /**
+                 * Callback fired when the time is up.
+                 */
+                @Override
+                public void onFinish() {
+
+                    Toast.makeText(MainActivity.this, "Ligando...",
+                            Toast.LENGTH_SHORT).show();
+
+                    //Liga o projetor
+                    if (projectorManager.switchProjector(true).getErrorCode() == 1) {
+
+                        projectorManager.setMode(ProjectorManager.MODE_WALL);
+                        setProjectoOn(true);
+                    }
+                }
+            }.start();
         }
     }
 
@@ -315,9 +397,17 @@ public class MainActivity extends TopBaseActivity {
         mediaManager.setMediaListener(faceRecognizeListener);
     }
 
-    class Listerning extends AsyncTask<Void, Void, Void> {
+    public void setProjectoOn(boolean projectoOn) {
+        this.projectoOn = projectoOn;
+    }
 
-        private static final String TAG = "Listerning";
+    public boolean isProjectoOn() {
+        return projectoOn;
+    }
+
+    class Listening extends AsyncTask<Void, Void, Void> {
+
+        private static final String TAG = "Listening";
 
         /**
          * Override this method to perform a computation on a background thread. The
