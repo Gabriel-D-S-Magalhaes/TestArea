@@ -1,5 +1,6 @@
 package vivacity.com.br.testarea;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -49,7 +50,6 @@ public class MainActivity extends TopBaseActivity {
     private boolean heardSanbot = false;
     private int angleToTurn;
     private boolean humanDetected = false;
-    private boolean projectoOn = false;
 
     Listening listening = new Listening();
 
@@ -120,85 +120,8 @@ public class MainActivity extends TopBaseActivity {
             case R.id.btn_wheel_control:
                 //heardSanbot();
                 //takingControlOfProjector();
+                //startActivity(new Intent(this, ProjetarVideoActivity.class));
                 break;
-        }
-    }
-
-    /**
-     * To turn on/ off the projector. Note: Wait at least 12 second between each switch, otherwise
-     * the next command will not be executed.
-     */
-    private void takingControlOfProjector() {
-
-        if (isProjectoOn()) {
-            // O projetor será desligado.
-
-            new CountDownTimer(12000, 4000) {
-
-                /**
-                 * Callback fired on regular interval.
-                 *
-                 * @param millisUntilFinished The amount of time until finished.
-                 */
-                @Override
-                public void onTick(long millisUntilFinished) {
-
-                    Toast.makeText(MainActivity.this,
-                            "Aguarde " + millisUntilFinished / 1000 + "s para desligar o projetor."
-                            , Toast.LENGTH_SHORT).show();
-                }
-
-                /**
-                 * Callback fired when the time is up.
-                 */
-                @Override
-                public void onFinish() {
-
-                    Toast.makeText(MainActivity.this, "Desligando...",
-                            Toast.LENGTH_SHORT).show();
-
-                    // Desliga o projetor
-                    if (projectorManager.switchProjector(false).getErrorCode() == 1) {
-
-                        setProjectoOn(false);
-                    }
-                }
-            }.start();
-
-        } else if (!isProjectoOn()) {
-            // O Projetor será desligado.
-
-            new CountDownTimer(12000, 4000) {
-                /**
-                 * Callback fired on regular interval.
-                 *
-                 * @param millisUntilFinished The amount of time until finished.
-                 */
-                @Override
-                public void onTick(long millisUntilFinished) {
-
-                    Toast.makeText(MainActivity.this,
-                            "Aguarde " + millisUntilFinished / 1000 + "s para ligar o projetor."
-                            , Toast.LENGTH_SHORT).show();
-                }
-
-                /**
-                 * Callback fired when the time is up.
-                 */
-                @Override
-                public void onFinish() {
-
-                    Toast.makeText(MainActivity.this, "Ligando...",
-                            Toast.LENGTH_SHORT).show();
-
-                    //Liga o projetor
-                    if (projectorManager.switchProjector(true).getErrorCode() == 1) {
-
-                        projectorManager.setMode(ProjectorManager.MODE_WALL);
-                        setProjectoOn(true);
-                    }
-                }
-            }.start();
         }
     }
 
@@ -397,14 +320,6 @@ public class MainActivity extends TopBaseActivity {
         mediaManager.setMediaListener(faceRecognizeListener);
     }
 
-    public void setProjectoOn(boolean projectoOn) {
-        this.projectoOn = projectoOn;
-    }
-
-    public boolean isProjectoOn() {
-        return projectoOn;
-    }
-
     class Listening extends AsyncTask<Void, Void, Void> {
 
         private static final String TAG = "Listening";
@@ -426,9 +341,9 @@ public class MainActivity extends TopBaseActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.i(TAG, "doInBackground running");
-            searchSoundSource();
-            detectHuman();
-            recognizeFamilyMember();
+            //searchSoundSource();
+            //detectHuman();
+            //recognizeFamilyMember();
             return null;
         }
 
