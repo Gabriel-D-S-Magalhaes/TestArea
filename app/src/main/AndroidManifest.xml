@@ -30,10 +30,33 @@
         <activity
             android:name=".ProjetarVideoActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+            <!--See: http://bbs-en.qihancloud.com:88/?language=en#topic/view/20-->
+
+            <!--After configuring this preprocessor instruction, system is still able to monitor
+            touch event, but the robot will not respond to any touch event, including basic behavior
+            such as awaking robot by touching.-->
+            <!--meta-data
+                android:name="FORBID_TOUCH"
+                android:value="true" /-->
+
+            <!--After configuring this preprocessor instruction, system is still able to know PIR
+            sensor has been triggered, but the robot will not respond to it.-->
+            <!--meta-data
+                android:name="FORBID_PIR"
+                android:value="true" /-->
+
+            <!--After configuring this preprocessor instruction, only robot ear LEDs will turn green
+            when awaking word has been detected, any other response will not be executed.-->
+            <!--meta-data
+                android:name="FORBID_WAKE_RESPONSE"
+                android:value="true" /-->
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
         </activity>
     </application>
 
