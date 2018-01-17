@@ -3,6 +3,7 @@
     package="vivacity.com.br.testarea">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,14 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".SearchSoundSourceActivity" />
 
         <meta-data
             android:name="RECOGNIZE_MODE"
             android:value="1" />
-        <meta-data
+
+        <!--Maybe this is unnecessary-->
+        <!--meta-data
             android:name="FORBID_PIR"
-            android:value="true" />
+            android:value="true" /-->
 
         <activity
             android:name=".ProjetarVideoActivity"
@@ -36,28 +41,22 @@
             <!--After configuring this preprocessor instruction, system is still able to monitor
             touch event, but the robot will not respond to any touch event, including basic behavior
             such as awaking robot by touching.-->
-            <!--meta-data
+            <meta-data
                 android:name="FORBID_TOUCH"
-                android:value="true" /-->
+                android:value="true" />
 
             <!--After configuring this preprocessor instruction, system is still able to know PIR
             sensor has been triggered, but the robot will not respond to it.-->
-            <!--meta-data
-                android:name="FORBID_PIR"
-                android:value="true" /-->
+            <!--Maybe this is unnecessary-->
+            <!--meta-data android:name="FORBID_PIR" android:value="true" /-->
 
             <!--After configuring this preprocessor instruction, only robot ear LEDs will turn green
             when awaking word has been detected, any other response will not be executed.-->
-            <!--meta-data
-                android:name="FORBID_WAKE_RESPONSE"
-                android:value="true" /-->
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--Maybe this is unnecessary-->
+            <!--meta-data android:name="FORBID_WAKE_RESPONSE" android:value="true" /-->
 
         </activity>
+
     </application>
 
 </manifest>

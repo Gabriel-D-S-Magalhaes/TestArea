@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,6 +30,7 @@ import com.qihancloud.opensdk.function.unit.interfaces.hardware.VoiceLocateListe
 import com.qihancloud.opensdk.function.unit.interfaces.media.FaceRecognizeListener;
 import com.qihancloud.opensdk.function.unit.interfaces.speech.RecognizeListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,7 +43,6 @@ public class MainActivity extends TopBaseActivity {
     private WheelMotionManager wheelMotionManager;
     private SpeechManager speechManager;
     private MediaManager mediaManager;
-    private ProjectorManager projectorManager;
 
     //Constants
     private static final String TAG = "MainActivity";
@@ -75,7 +76,6 @@ public class MainActivity extends TopBaseActivity {
         wheelMotionManager = (WheelMotionManager) getUnitManager(FuncConstant.WHEELMOTION_MANAGER);
         speechManager = (SpeechManager) getUnitManager(FuncConstant.SPEECH_MANAGER);
         mediaManager = (MediaManager) getUnitManager(FuncConstant.MEDIA_MANAGER);
-        projectorManager = (ProjectorManager) getUnitManager(FuncConstant.PROJECTOR_MANAGER);
 
         tv_sound_source_info = (TextView) findViewById(R.id.tv_sound_source_info);
         tv_tts_info = (TextView) findViewById(R.id.tv_tts_info);
@@ -120,7 +120,7 @@ public class MainActivity extends TopBaseActivity {
             case R.id.btn_wheel_control:
                 //heardSanbot();
                 //takingControlOfProjector();
-                //startActivity(new Intent(this, ProjetarVideoActivity.class));
+                startActivity(new Intent(this, ProjetarVideoActivity.class));
                 break;
         }
     }
