@@ -1,10 +1,12 @@
 package vivacity.com.br.testarea;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -120,7 +122,8 @@ public class MainActivity extends TopBaseActivity {
             case R.id.btn_wheel_control:
                 //heardSanbot();
                 //takingControlOfProjector();
-                startActivity(new Intent(this, ProjetarVideoActivity.class));
+                //startActivity(new Intent(this, ProjetarVideoActivity.class));
+                executarMusicas();
                 break;
         }
     }
@@ -318,6 +321,16 @@ public class MainActivity extends TopBaseActivity {
         };
 
         mediaManager.setMediaListener(faceRecognizeListener);
+    }
+
+    public void executarMusicas() {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        File file = new File(Environment.getExternalStorageDirectory().getPath() +
+                "/Documents");// Talvez seja necessário trocar esse caminho
+
+        intent.setDataAndType(Uri.fromFile(file), "audio/*");//Pegue qualquer arquivo de audio do caminho .../Documents
+        startActivity(intent);// nome do método auto explicativo.
     }
 
     class Listening extends AsyncTask<Void, Void, Void> {
