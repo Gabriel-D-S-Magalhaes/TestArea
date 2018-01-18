@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="vivacity.com.br.testarea.MainActivity">
+    tools:context="vivacity.com.br.testarea.MainActivity"
+    android:orientation="horizontal">
 
     <!--Button
         android:id="@+id/btn_search"
@@ -27,28 +28,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_wheel_control"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Sound Source TextView"/>
 
     <TextView
         android:id="@+id/tv_tts_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_sound_source_info"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="STT TextView"/>
 
     <TextView
         android:id="@+id/tv_turn_sanbot_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_tts_info"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Turn Sanbot TextView"/>
 
     <TextView
         android:id="@+id/tv_human_detected_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_turn_sanbot_info"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Human detected textViws"/>
+
+    <Button
+        android:id="@+id/executar_musicas_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickView"
+        android:text="Músicas"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="100dp"/>
+
+    <Button
+        android:id="@+id/executar_videos_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickView"
+        android:text="Vídeos"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="300dp"/>
 
     <!--ImageView
         android:id="@+id/forecast_weather_icon"
