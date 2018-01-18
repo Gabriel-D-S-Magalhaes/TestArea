@@ -145,17 +145,7 @@ public class ProjetarVideoActivity extends TopBaseActivity {
      */
     private void executarVideo() {
 
-        // Cria uma Uri para o vídeo armazenado no dispositivo;
-        //Uri file = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sanbot_mps);
-        // NOTE: A Uri informada para a VideoView pode se referir tanto a um arquivo local como a um
-        // arquivo remoto.
-
-        // Atribui a uri para a VideoView
-        //videoView.setVideoURI(file);
-
-        final File sdcard = Environment.getExternalStorageDirectory();
-
-        File file = new File(sdcard, "/Documents/mps_innovative_solutions_for_future_retai.mp4");
+        // Atribui o caminho do primeiro vídeo encontrado
         videoView.setVideoPath(getVideos()[getVideoAtual()].getAbsolutePath());
 
         // Criação de um objeto dos controles de execução
@@ -186,9 +176,10 @@ public class ProjetarVideoActivity extends TopBaseActivity {
             }
         };
 
+        // Adiciona os botões prev e next aos controles de execução
         controller.setPrevNextListeners(next, prev);
 
-        // Adicionar os controles de execução, que são implementados pela classe MediaController;
+        // Adiciona os controles de execução, que são implementados pela classe MediaController;
         videoView.setMediaController(controller);
 
         // e, por fim, iniciar a reprodução, invocando o método VideoView.start.
@@ -324,41 +315,72 @@ public class ProjetarVideoActivity extends TopBaseActivity {
     }
 
     /**
-     * ERRO DE LÓGICA AQUI!
-     * */
+     * @param videoAtual Index do vídeo, sendo reproduzido.
+     */
+    public void setVideoAtual(int videoAtual) {
+        this.videoAtual = videoAtual;
+    }
+
+    /**
+     * @return index do vídeo anterior em relação ao vídeo que já está sendo reproduzido.
+     */
     private int prevVideo() {
 
+        // Se o vídeo sendo reproduzido tem índice igual a 0,
         if (getVideoAtual() == 0) {
-            return getQtdVideos();
+
+            // Logo estamos no primeiro vídeo e queremos reproduzir o último;
+            // Então o vídeo atual (que será reproduzido) terá índice = qtd de vídeos (ver searchVideos)
+            // menos 1 (é necessário a subtração pois estamos trabalhando com array);
+            setVideoAtual((getQtdVideos() - 1));
+
+            // e finalmente é retornado o indice que corresponde ao último vídeo do nosso array.
+            return (getQtdVideos() - 1);
         } else {
+
+            // o índice do vídeo que SERÁ reproduzido é igual ao índice do vídeo que ESTÁ sendo
+            // reproduzido MENOS 1;
             this.videoAtual -= 1;
+
+            // e finalmente é retornado o índice do vídeo que deve ser reproduzido.
             return getVideoAtual();
         }
     }
 
     /**
-     * ERRO DE LÓGICA AQUI!
-     * */
+     * @return index do próximo vídeo em relação ao vídeo que já está sendo reproduzido.
+     */
     private int nextVideo() {
 
-        if (getVideoAtual() < getQtdVideos()) {
+        // Se o vídeo sendo reproduzido é < qtd de vídeos - 1 (estamos trabalhando com array);
+        if (getVideoAtual() < (getQtdVideos() - 1)) {
+
+            // então o vídeo que será reproduzido terá índice = índice do video anterior + 1
             this.videoAtual += 1;
+
+            // e finalmente é retornado o indice que corresponde ao próximo vídeo do nosso array.
             return getVideoAtual();
         } else {
-            return 0;
+
+            // estamo reproduzindo o último vídeo. Logo o próximo será o primeiro, que corresponde
+            // ao índice 0;
+            setVideoAtual(0);
+
+            // e finalmente é retornado o índice do próximo (i. e. primeiro) vídeo.
+            return getVideoAtual();
         }
     }
 
     /**
      * @param videos Todos os vídeos (.mp4) encontrados no diretório Documents
-     * */
+     */
     private void setVideos(File[] videos) {
         this.videos = videos;
     }
 
     /**
      * @return Array de arquivos .mp4
-     * */
+     */
     private File[] getVideos() {
         return videos;
     }
