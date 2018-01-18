@@ -121,9 +121,13 @@ public class MainActivity extends TopBaseActivity {
         switch (view.getId()) {
             case R.id.btn_wheel_control:
                 //heardSanbot();
-                //takingControlOfProjector();
-                //startActivity(new Intent(this, ProjetarVideoActivity.class));
+                break;
+            case R.id.executar_musicas_btn:
                 executarMusicas();
+                break;
+
+            case R.id.executar_videos_btn:
+                startActivity(new Intent(this, ProjetarVideoActivity.class));
                 break;
         }
     }
