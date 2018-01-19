@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="vivacity.com.br.testarea.AITextSampleActivity">
+
+    <EditText
+        android:id="@+id/query_editText"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Query text here" />
+
+    <Button
+        android:id="@+id/send_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickedView"
+        android:text="Send" />
+
+    <ScrollView
+        android:layout_width="800dp"
+        android:layout_height="match_parent"
+        android:background="@color/dialog_divide_color">
+
+        <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:clickable="false"
+            android:text="Result of query" />
+
+    </ScrollView>
+
+</LinearLayout>

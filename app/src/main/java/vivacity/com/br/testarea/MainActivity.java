@@ -117,15 +117,21 @@ public class MainActivity extends TopBaseActivity {
      */
     public void onClickView(View view) {
         switch (view.getId()) {
+
             case R.id.btn_wheel_control:
                 //heardSanbot();
                 break;
+
             case R.id.executar_musicas_btn:
                 executarMusicas();
                 break;
 
             case R.id.executar_videos_btn:
                 startActivity(new Intent(this, ProjetarVideoActivity.class));
+                break;
+
+            case R.id.start_listen_btn:
+                startActivity(new Intent(this, AITextSampleActivity.class));
                 break;
         }
     }

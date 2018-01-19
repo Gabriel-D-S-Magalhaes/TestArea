@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -28,36 +27,46 @@
             android:name="RECOGNIZE_MODE"
             android:value="1" />
 
-        <!--Maybe this is unnecessary-->
-        <!--meta-data
+        <!-- Maybe this is unnecessary -->
+        <!--
+            meta-data
             android:name="FORBID_PIR"
-            android:value="true" /-->
+            android:value="true" /
+        -->
 
         <activity
             android:name=".ProjetarVideoActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-            <!--See: http://bbs-en.qihancloud.com:88/?language=en#topic/view/20-->
+            <!-- See: http://bbs-en.qihancloud.com:88/?language=en#topic/view/20 -->
 
-            <!--After configuring this preprocessor instruction, system is still able to monitor
+
+            <!--
+            After configuring this preprocessor instruction, system is still able to monitor
             touch event, but the robot will not respond to any touch event, including basic behavior
-            such as awaking robot by touching.-->
+            such as awaking robot by touching.
+            -->
             <meta-data
                 android:name="FORBID_TOUCH"
                 android:value="true" />
 
-            <!--After configuring this preprocessor instruction, system is still able to know PIR
-            sensor has been triggered, but the robot will not respond to it.-->
-            <!--Maybe this is unnecessary-->
-            <!--meta-data android:name="FORBID_PIR" android:value="true" /-->
+            <!--
+            After configuring this preprocessor instruction, system is still able to know PIR
+            sensor has been triggered, but the robot will not respond to it.
+            -->
+            <!-- Maybe this is unnecessary -->
+            <!-- meta-data android:name="FORBID_PIR" android:value="true" / -->
 
-            <!--After configuring this preprocessor instruction, only robot ear LEDs will turn green
-            when awaking word has been detected, any other response will not be executed.-->
-            <!--Maybe this is unnecessary-->
-            <!--meta-data android:name="FORBID_WAKE_RESPONSE" android:value="true" /-->
+
+            <!--
+            After configuring this preprocessor instruction, only robot ear LEDs will turn green
+            when awaking word has been detected, any other response will not be executed.
+            -->
+            <!-- Maybe this is unnecessary -->
+            <!-- meta-data android:name="FORBID_WAKE_RESPONSE" android:value="true" / -->
 
         </activity>
-
+        <activity android:name=".AITextSampleActivity"></activity>
     </application>
 
 </manifest>

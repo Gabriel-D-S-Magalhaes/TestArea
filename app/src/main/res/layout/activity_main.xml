@@ -77,6 +77,7 @@
         android:id="@+id/start_listen_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickView"
         android:text="Dialogflow"
         android:layout_marginLeft="175dp"
         android:layout_alignTop="@+id/btn_wheel_control"/>
