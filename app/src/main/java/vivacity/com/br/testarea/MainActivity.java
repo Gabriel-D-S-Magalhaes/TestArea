@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,7 +23,6 @@ import com.qihancloud.opensdk.function.beans.wheelmotion.DistanceWheelMotion;
 import com.qihancloud.opensdk.function.beans.wheelmotion.RelativeAngleWheelMotion;
 import com.qihancloud.opensdk.function.unit.HardWareManager;
 import com.qihancloud.opensdk.function.unit.MediaManager;
-import com.qihancloud.opensdk.function.unit.ProjectorManager;
 import com.qihancloud.opensdk.function.unit.SpeechManager;
 import com.qihancloud.opensdk.function.unit.WheelMotionManager;
 import com.qihancloud.opensdk.function.unit.interfaces.hardware.PIRListener;
@@ -61,7 +59,6 @@ public class MainActivity extends TopBaseActivity {
     TextView tv_tts_info;
     TextView tv_turn_sanbot_info;
     TextView tv_human_detected_info;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +101,7 @@ public class MainActivity extends TopBaseActivity {
                     //System.out.println(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_NAME_STATE, "Belo Horizonte", "MG"));
                     WeatherBean weatherBean = new GsonBuilder().create().fromJson(httpMethods.weather(3477), WeatherBean.class);
                     System.out.println("Cidade: " + weatherBean.getName() + "\nTemperatura = " + weatherBean.getData().getTemperature() + "ºC");
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
