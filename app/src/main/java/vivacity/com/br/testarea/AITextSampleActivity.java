@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -128,10 +129,9 @@ public class AITextSampleActivity extends AppCompatActivity {
     private void onResult(final AIResponse response) {
         // Use the response object to get all the results
 
-        // Get the status
+        // Get and handle the status
         final Status status = response.getStatus();
-        Log.i(TAG, "Status code: " + status.getCode());
-        Log.i(TAG, "Status type: " + status.getErrorType());
+        handleStatus(status);
 
         // Result
         final Result result = response.getResult();
@@ -169,6 +169,65 @@ public class AITextSampleActivity extends AppCompatActivity {
             @Override
             public void run() {
                 resultTextView.setText(error.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Método responsável por lidar com o status e códigos de erros retornados pelo Dialogflow.
+     *
+     * @param status objeto {@link Status}
+     *               To know more: https://dialogflow.com/docs/reference/agent/#status_object
+     */
+    private void handleStatus(final Status status) {
+
+        Log.i(TAG, "Status code: " + status.getCode());
+        Log.i(TAG, "Status type: " + status.getErrorType());
+        Log.i(TAG, "Status errorId: " + status.getErrorID());
+        Log.i(TAG, "Status errorDetails: " + status.getErrorDetails());
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                switch (status.getCode()) {
+                    case 400:
+
+                        Toast.makeText(getApplicationContext(), "Erro 400!",
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    case 401:
+
+                        Toast.makeText(getApplicationContext(),
+                                "Erro 401! Credenciais faltantes ou erradas.",
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    case 404:
+
+                        Toast.makeText(getApplicationContext(), "Erro 404!",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case 405:
+
+                        Toast.makeText(getApplicationContext(), "Erro 405!",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case 406:
+
+                        Toast.makeText(getApplicationContext(), "Erro 406!",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case 409:
+
+                        Toast.makeText(getApplicationContext(),
+                                "Erro 409!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 429:
+
+                        Toast.makeText(getApplicationContext(),
+                                "Muitos requests foram enviados no curto período de tempo!",
+                                Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
         });
     }
