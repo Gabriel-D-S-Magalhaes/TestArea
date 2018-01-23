@@ -1,6 +1,7 @@
 package vivacity.com.br.testarea;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.io.IOException;
 
@@ -88,15 +89,15 @@ public class HTTPMethods {
 
         switch (i) {
             case 1:
-                if (city_name != null)
+                if (!TextUtils.isEmpty(city_name))
                     url = "http://apiadvisor.climatempo.com.br/api/v1/locale/city?name=" + city_name + "&token=" + TOKEN;
                 break;
             case 2:
-                if (city_state != null)
+                if (!TextUtils.isEmpty(city_state))
                     url = "http://apiadvisor.climatempo.com.br/api/v1/locale/city?state=" + city_state + "&token=" + TOKEN;
                 break;
             case 3:
-                if (city_name != null && city_state != null)
+                if (!TextUtils.isEmpty(city_name) && !TextUtils.isEmpty(city_state))
                     url = "http://apiadvisor.climatempo.com.br/api/v1/locale/city?name=" + city_name + "&state=" + city_state + "&token=" + TOKEN;
                 break;
         }
