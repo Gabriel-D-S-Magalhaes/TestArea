@@ -67,6 +67,7 @@
 
         </activity>
         <activity android:name=".AITextSampleActivity" />
+
     </application>
 
 </manifest>
