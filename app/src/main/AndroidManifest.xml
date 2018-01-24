@@ -67,7 +67,8 @@
 
         </activity>
         <activity android:name=".AITextSampleActivity" />
-
+        <activity android:name=".SpeechActivity" />
+        <activity android:name=".AIDialogSampleActivity"></activity>
     </application>
 
 </manifest>
