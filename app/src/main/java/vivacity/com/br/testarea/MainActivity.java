@@ -120,6 +120,7 @@ public class MainActivity extends TopBaseActivity {
 
             case R.id.btn_wheel_control:
                 //heardSanbot();
+                startActivity(new Intent(this, AIDialogSampleActivity.class));
                 break;
 
             case R.id.executar_musicas_btn:
