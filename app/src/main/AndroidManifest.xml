@@ -50,26 +50,35 @@
                 android:name="FORBID_TOUCH"
                 android:value="true" />
 
-            <!-- After configuring this preprocessor instruction, system is still able to know PIR
-            sensor has been triggered, but the robot will not respond to it. -->
+            <!--
+            After configuring this preprocessor instruction, system is still able to know PIR
+            sensor has been triggered, but the robot will not respond to it.
+            -->
             <!-- Maybe this is unnecessary -->
             <!-- meta-data android:name="FORBID_PIR" android:value="true" / -->
 
-            <!-- After configuring this preprocessor instruction, only robot ear LEDs will turn green
-            when awaking word has been detected, any other response will not be executed. -->
+
+            <!--
+            After configuring this preprocessor instruction, only robot ear LEDs will turn green
+            when awaking word has been detected, any other response will not be executed.
+            -->
             <!-- Maybe this is unnecessary -->
             <!-- meta-data android:name="FORBID_WAKE_RESPONSE" android:value="true" / -->
 
         </activity>
         <activity android:name=".AITextSampleActivity" />
         <activity android:name=".AIDialogSampleActivity">
-            <!--Configure this line of code if record function need to be used. If it is taking
+
+            <!--
+            Configure this line of code if record function need to be used. If it is taking
             effect, the ear LEDs of robot will turn into blue. APP will lose connection with main
-            control service if misconfigured this line of code.-->
+            control service if misconfigured this line of code.
+            -->
             <meta-data
                 android:name="config_record"
                 android:value="true" />
         </activity>
+        <activity android:name=".TextToSpeechActivity"></activity>
     </application>
 
 </manifest>
