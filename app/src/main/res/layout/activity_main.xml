@@ -15,7 +15,7 @@
         android:text="SEARCH"/-->
 
     <Button
-        android:id="@+id/btn_wheel_control"
+        android:id="@+id/btn_teste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
         android:id="@+id/tv_sound_source_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_wheel_control"
+        android:layout_below="@+id/btn_teste"
         android:layout_centerHorizontal="true"
         android:text="Sound Source TextView"/>
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:onClick="onClickView"
         android:text="Músicas"
-        android:layout_alignTop="@+id/btn_wheel_control"
+        android:layout_alignTop="@+id/btn_teste"
         android:layout_marginLeft="300dp"/>
 
     <Button
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:onClick="onClickView"
         android:text="Vídeos"
-        android:layout_alignTop="@+id/btn_wheel_control"
+        android:layout_alignTop="@+id/btn_teste"
         android:layout_marginLeft="400dp"/>
 
     <Button
@@ -80,7 +80,7 @@
         android:onClick="onClickView"
         android:text="Dialogflow"
         android:layout_marginLeft="175dp"
-        android:layout_alignTop="@+id/btn_wheel_control"/>
+        android:layout_alignTop="@+id/btn_teste"/>
 
     <!--ImageView
         android:id="@+id/forecast_weather_icon"

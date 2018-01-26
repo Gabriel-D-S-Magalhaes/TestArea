@@ -118,10 +118,8 @@ public class MainActivity extends TopBaseActivity {
     public void onClickView(View view) {
         switch (view.getId()) {
 
-            case R.id.btn_wheel_control:
+            case R.id.btn_teste:
                 //heardSanbot();
-                startActivity(new Intent(this, AIDialogSampleActivity.class));
-                //startActivity(new Intent(this, TextToSpeechActivity.class));
                 break;
 
             case R.id.executar_musicas_btn:
@@ -133,7 +131,7 @@ public class MainActivity extends TopBaseActivity {
                 break;
 
             case R.id.start_listen_btn:
-                startActivity(new Intent(this, AITextSampleActivity.class));
+                startActivity(new Intent(this, AIDialogSampleActivity.class));
                 break;
         }
     }
