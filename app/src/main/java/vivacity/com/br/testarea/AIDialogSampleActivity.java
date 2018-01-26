@@ -1,12 +1,14 @@
 package vivacity.com.br.testarea;
 
 import android.graphics.Color;
+import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import ai.api.android.AIConfiguration;
@@ -26,6 +29,9 @@ import ai.api.ui.AIDialog;
 public class AIDialogSampleActivity extends AppCompatActivity implements AIDialog.AIDialogListener {
 
     private static final String TAG = AIDialogSampleActivity.class.getSimpleName();
+
+    private TextToSpeech textToSpeech;
+    private static int MAX_SPEECH_INPUT_LENGTH = TextToSpeech.getMaxSpeechInputLength();
 
     private TextView resultTextView;
 
@@ -67,6 +73,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
 
         // Get speech
         final String speech = resultado.getFulfillment().getSpeech();
+        speak(speech);
         Log.i(TAG, "Speech: " + speech);
 
         // Get parameters
@@ -104,7 +111,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
      * @param status objeto {@link Status}
      *               To know more: https://dialogflow.com/docs/reference/agent/#status_object
      */
-    private void handleStatus(final Status status) {
+    private void handleStatus(@NonNull final Status status) {
 
         Log.i(TAG, "Status code: " + status.getCode());
         Log.i(TAG, "Status type: " + status.getErrorType());
@@ -159,5 +166,65 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
 
     public void buttonListenOnClick(View view) {
         aiDialog.showAndListen();
+    }
+
+    /**
+     * Método que faz o robô falar. Usando o Mecanismo de Convesão de Texto em Voz.
+     *
+     * @param text = Texto para ser convertido em voz.
+     */
+    private void speak(@NonNull final String text) {
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+
+                if (status == TextToSpeech.SUCCESS) {
+
+                    if (textToSpeech.isLanguageAvailable(new Locale("pt",
+                            "BR")) == TextToSpeech.LANG_COUNTRY_AVAILABLE) {
+
+                        // The specified language as represented by the Locale is available and supported.
+                        textToSpeech.setLanguage(new Locale("pt", "BR"));
+
+                        if (!TextUtils.isEmpty(text)) {
+
+                            if (text.length() <= MAX_SPEECH_INPUT_LENGTH) {
+
+                                textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                            } else {
+
+                                Toast.makeText(getApplicationContext(),
+                                        "Tamanho máx. do texto = " + MAX_SPEECH_INPUT_LENGTH,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+
+                            Toast.makeText(getApplicationContext(),
+                                    "Sem texto a ser convertido.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+
+                        Toast.makeText(getApplicationContext(), "Idioma pt-BR não disponível.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+
+                    Toast.makeText(getApplicationContext(),
+                            "Your device don't support Speech output",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+            Log.i(TAG, "Método shutdown chamado no método onDestroy.");
+        }
+        super.onDestroy();
     }
 }
