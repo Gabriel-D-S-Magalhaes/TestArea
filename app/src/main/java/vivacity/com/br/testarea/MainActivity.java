@@ -88,7 +88,7 @@ public class MainActivity extends TopBaseActivity {
     protected void onMainServiceConnected() {
     }
 
-    public void search(View view) {
+    private void search() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -120,6 +120,7 @@ public class MainActivity extends TopBaseActivity {
 
             case R.id.btn_teste:
                 //heardSanbot();
+                search();
                 break;
 
             case R.id.executar_musicas_btn:
