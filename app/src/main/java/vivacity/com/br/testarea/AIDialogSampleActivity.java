@@ -1,6 +1,9 @@
 package vivacity.com.br.testarea;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +18,13 @@ import android.widget.Toast;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
+import java.io.File;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import ai.api.android.AIConfiguration;
 import ai.api.model.AIError;
@@ -78,16 +85,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
 
         // Get parameters
         final HashMap<String, JsonElement> params = resultado.getParameters();
-
-        if (params != null && !params.isEmpty()) {
-
-            Log.i(TAG, "Parameters: ");
-
-            for (final Map.Entry<String, JsonElement> entry : params.entrySet()) {
-
-                Log.i(TAG, String.format("%s: %s", entry.getKey(), entry.getValue().toString()));
-            }
-        }
+        handleParameters(params);
 
         resultTextView.setTextColor(Color.BLACK);
         resultTextView.setText(new GsonBuilder().setPrettyPrinting().create().toJson(result));
@@ -164,6 +162,36 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         });
     }
 
+    private void handleParameters(final HashMap<String, JsonElement> parameters) {
+
+        // Verifica se o argumento passado para o método não é null
+        if (parameters != null && !parameters.isEmpty()) {
+
+            // pega o nome do app a ser iniciado
+            String app = parameters.get("app").getAsString();
+
+            // Verifica qual app deve ser iniciado
+            if (Objects.equals(app, "Music")) {
+
+                //usa o player do robô
+                executarMusicas();
+            } else if (Objects.equals(app, "Movie")) {
+
+                //projetar usando a activity ProjetarVideoActivity
+                projetarVideos(1);
+            }
+
+            // Show info
+            Log.i(TAG, "Parameters: ");
+            /*O método entrySet() da classe Map nos devolve um Set<Map.Entry<K, V>>, onde K e V são
+             os tipos da chave e do valor respectivamente do nosso mapa. Esse retorno nada mais do
+             que uma entrada contendo a chave e seu respectivo valor.*/
+            for (final Map.Entry<String, JsonElement> entry : parameters.entrySet()) {
+                Log.i(TAG, String.format("%s: %s", entry.getKey(), entry.getValue().toString()));
+            }
+        }
+    }
+
     public void buttonListenOnClick(View view) {
         aiDialog.showAndListen();
     }
@@ -218,6 +246,45 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         });
     }
 
+    /**
+     * Método responsável por reproduzir as músicas através do player padrão do robô.
+     */
+    private void executarMusicas() {
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        File file = new File(Environment.getExternalStorageDirectory().getPath() +
+                "/Documents");// Talvez seja necessário trocar esse caminho
+
+        intent.setDataAndType(Uri.fromFile(file), "audio/*");//Pegue qualquer arquivo de audio do caminho .../Documents
+        startActivity(intent);// nome do método auto explicativo.
+    }
+
+    /**
+     * Método responsável pela reprodução e projeção dos vídeos.
+     *
+     * @param app representa qual aplicação será usada para reproduzir as músicas.
+     *            1 - Aplicativo atual: Usa a {@link ProjetarVideoActivity}.
+     *            2 - Aplicativo Movie: Usa o player de vídeo do Sanbot.
+     */
+    private void projetarVideos(int app) {
+
+        switch (app) {
+            case 1:
+
+                startActivity(new Intent(this, ProjetarVideoActivity.class));
+                break;
+            case 2:
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                File file = new File(Environment.getExternalStorageDirectory().getPath() +
+                        "/Documents");// Talvez seja necessário trocar esse caminho
+
+                intent.setDataAndType(Uri.fromFile(file), "video/*");//Pegue qualquer arquivo de video do caminho .../Documents
+                startActivity(intent);// nome do método auto explicativo.
+                break;
+        }
+    }
+
     @Override
     protected void onDestroy() {
         if (textToSpeech != null) {
@@ -225,6 +292,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
             textToSpeech.shutdown();
             Log.i(TAG, "Método shutdown chamado no método onDestroy.");
         }
+        Log.i(TAG, "onDestroy");
         super.onDestroy();
     }
 }
