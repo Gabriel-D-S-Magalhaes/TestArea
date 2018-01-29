@@ -113,7 +113,7 @@ public class MainActivity extends TopBaseActivity {
     }
 
     /**
-     * @param view
+     * @param view object clicked
      */
     public void onClickView(View view) {
         switch (view.getId()) {
@@ -121,14 +121,6 @@ public class MainActivity extends TopBaseActivity {
             case R.id.btn_teste:
                 //heardSanbot();
                 search();
-                break;
-
-            case R.id.executar_musicas_btn:
-                executarMusicas();
-                break;
-
-            case R.id.executar_videos_btn:
-                startActivity(new Intent(this, ProjetarVideoActivity.class));
                 break;
 
             case R.id.start_listen_btn:
@@ -330,16 +322,6 @@ public class MainActivity extends TopBaseActivity {
         };
 
         mediaManager.setMediaListener(faceRecognizeListener);
-    }
-
-    public void executarMusicas() {
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        File file = new File(Environment.getExternalStorageDirectory().getPath() +
-                "/Documents");// Talvez seja necessário trocar esse caminho
-
-        intent.setDataAndType(Uri.fromFile(file), "audio/*");//Pegue qualquer arquivo de audio do caminho .../Documents
-        startActivity(intent);// nome do método auto explicativo.
     }
 
     class Listening extends AsyncTask<Void, Void, Void> {
