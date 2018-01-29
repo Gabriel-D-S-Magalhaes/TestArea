@@ -19,8 +19,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -38,7 +36,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
     private static final String TAG = AIDialogSampleActivity.class.getSimpleName();
 
     private TextToSpeech textToSpeech;
-    private static int MAX_SPEECH_INPUT_LENGTH = TextToSpeech.getMaxSpeechInputLength();
+    private static final int MAX_SPEECH_INPUT_LENGTH = TextToSpeech.getMaxSpeechInputLength();
 
     private TextView resultTextView;
 
@@ -197,7 +195,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
     }
 
     /**
-     * Método que faz o robô falar. Usando o Mecanismo de Convesão de Texto em Voz.
+     * Método que faz o robô falar. Usando o Mecanismo de Convesão de Texto em Voz do Google.
      *
      * @param text = Texto para ser convertido em voz.
      */

@@ -17,7 +17,7 @@ import okhttp3.Response;
 
 public class HTTPMethods {
 
-    final private String TOKEN = "YOUR_TOKEN_ACESS";
+    private final String TOKEN = "";
     final static public int SEARCH_CITY_NAME = 1;
     final static public int SEARCH_CITY_STATE = 2;
     final static public int SEARCH_CITY_NAME_STATE = 3;
