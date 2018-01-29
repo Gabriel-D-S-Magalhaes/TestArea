@@ -1,11 +1,9 @@
 package vivacity.com.br.testarea;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,7 +28,6 @@ import com.qihancloud.opensdk.function.unit.interfaces.hardware.VoiceLocateListe
 import com.qihancloud.opensdk.function.unit.interfaces.media.FaceRecognizeListener;
 import com.qihancloud.opensdk.function.unit.interfaces.speech.RecognizeListener;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -88,19 +85,72 @@ public class MainActivity extends TopBaseActivity {
     protected void onMainServiceConnected() {
     }
 
-    private void search() {
+    /**
+     * Método com todos os exemplos possíveis da API Climatempo
+     */
+    private void apiClimatempo() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    //System.out.println(httpMethods.forecast15(3477));
-                    //System.out.println(httpMethods.forecast3(3477));
-                    //System.out.println(httpMethods.localeID(3477));
-                    //System.out.println(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_NAME, "São Paulo", null));
-                    //System.out.println(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_STATE, null, "RJ"));
-                    //System.out.println(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_NAME_STATE, "Belo Horizonte", "MG"));
-                    WeatherBean weatherBean = new GsonBuilder().create().fromJson(httpMethods.weather(3477), WeatherBean.class);
-                    System.out.println("Cidade: " + weatherBean.getName() + "\nTemperatura = " + weatherBean.getData().getTemperature() + "ºC");
+
+                    /*Forecast15Bean forecast15Bean = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.forecast15(3477), Forecast15Bean.class);
+
+                    for (Forecast15Bean.Data data : forecast15Bean.getData()) {
+                        Log.i(TAG, data.getDate_br());
+                        Log.i(TAG, "Probabilidade de chuva = "
+                                + data.getRain().getProbability() + "%");
+                    }*/
+
+                   /* Forecast3Bean forecast3Bean = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.forecast3(3477), Forecast3Bean.class);
+
+                    for (Forecast3Bean.Data data : forecast3Bean.getData()) {
+                        Log.i(TAG, data.getDate_br());
+                        Log.i(TAG, "Temperatura = " + data.getTemperature().getTemperature()
+                                + "°C");
+                    }*/
+
+                    /*LocaleBean localeBean = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.localeID(3477), LocaleBean.class);
+
+                    Log.i(TAG, "ID: " + localeBean.getId() + "\tPaís: " + localeBean.getCountry()
+                            + "\tEstado: " + localeBean.getState() + "\tNome: " + localeBean.getName());*/
+
+                   /* LocaleBean[] sp = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_NAME,
+                                    "São Paulo", null), LocaleBean[].class);
+                    Log.i(TAG, "Qtd de cidades encontradas: " + sp.length);
+
+                    for (LocaleBean bean : sp) {
+                        Log.i(TAG, "ID: " + bean.getId() + "\tPaís: " + bean.getCountry()
+                                + "\tEstado: " + bean.getState() + "\tNome: " + bean.getName());
+                    }*/
+
+                    /*LocaleBean[] rj = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_STATE,
+                                    null, "RJ"), LocaleBean[].class);
+                    Log.i(TAG, "Qtd de cidades encontradas: " + rj.length);
+                    for (LocaleBean bean : rj) {
+                        Log.i(TAG, "ID: " + bean.getId() + "\tPaís: " + bean.getCountry()
+                                + "\tEstado: " + bean.getState() + "\tNome: " + bean.getName());
+                    }*/
+
+                   /* LocaleBean[] bh = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.localeNameState(HTTPMethods.SEARCH_CITY_NAME_STATE,
+                                    "Belo Horizonte", "MG"), LocaleBean[].class);
+                    Log.i(TAG, "Qtd de cidades encontradas: " + bh.length);
+                    for (LocaleBean bean : bh) {
+                        Log.i(TAG, "ID: " + bean.getId() + "\tPaís: " + bean.getCountry()
+                                + "\tEstado: " + bean.getState() + "\tNome: " + bean.getName());
+                    }*/
+
+
+                    WeatherBean weatherBean = new GsonBuilder().setPrettyPrinting().create()
+                            .fromJson(httpMethods.weather(3477), WeatherBean.class);
+                    Log.i(TAG, "Cidade: " + weatherBean.getName());
+                    Log.i(TAG, "Temperatura = " + weatherBean.getData().getTemperature() + "°C");
 
 
                 } catch (IOException e) {
@@ -120,7 +170,7 @@ public class MainActivity extends TopBaseActivity {
 
             case R.id.btn_teste:
                 //heardSanbot();
-                search();
+                //apiClimatempo();
                 break;
 
             case R.id.start_listen_btn:
