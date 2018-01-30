@@ -160,6 +160,11 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         });
     }
 
+    /**
+     * Método responsável por lidar com o parameters (JSON Object) retornado pelo Dialogflow.
+     *
+     * @param parameters {@link AIResponse}.getResult().getParameters()
+     */
     private void handleParameters(final HashMap<String, JsonElement> parameters) {
 
         // Verifica se o argumento passado para o método não é null
@@ -190,6 +195,9 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         }
     }
 
+    /**
+     * Método responsável por mostrar a caixa de diálogo que captura a fala do usuário.
+     */
     public void buttonListenOnClick(View view) {
         aiDialog.showAndListen();
     }
@@ -288,6 +296,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         if (aiDialog != null) {
             aiDialog.resume();
         }
+        Log.i(TAG, "onResume");
         super.onResume();
     }
 
@@ -296,6 +305,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         if (aiDialog != null) {
             aiDialog.pause();
         }
+        Log.i(TAG, "onPause");
         super.onPause();
     }
 
