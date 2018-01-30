@@ -284,6 +284,22 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
     }
 
     @Override
+    protected void onResume() {
+        if (aiDialog != null) {
+            aiDialog.resume();
+        }
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        if (aiDialog != null) {
+            aiDialog.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         if (textToSpeech != null) {
             textToSpeech.stop();
