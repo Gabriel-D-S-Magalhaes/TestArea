@@ -76,6 +76,10 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         // Get action
         Log.i(TAG, "Action: " + resultado.getAction());
 
+        // Get actionIncomplete
+        boolean actionIncomplete = resultado.isActionIncomplete();
+        Log.i(TAG, "ActionIncomplete: " + actionIncomplete);
+
         // Get speech
         final String speech = resultado.getFulfillment().getSpeech();
         speak(speech);
@@ -170,7 +174,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         // Verifica se o argumento passado para o método não é null
         if (parameters != null && !parameters.isEmpty()) {
 
-            // pega o nome do app a ser iniciado
+            /*// pega o nome do app a ser iniciado
             String app = parameters.get("app").getAsString();
 
             // Verifica qual app deve ser iniciado
@@ -182,7 +186,7 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
 
                 //projetar usando a activity ProjetarVideoActivity
                 projetarVideos(1);
-            }
+            }*/
 
             // Show info
             Log.i(TAG, "Parameters: ");
@@ -199,6 +203,9 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
      * Método responsável por mostrar a caixa de diálogo que captura a fala do usuário.
      */
     public void buttonListenOnClick(View view) {
+        if (textToSpeech != null && textToSpeech.isSpeaking()) {
+            textToSpeech.stop();
+        }
         aiDialog.showAndListen();
     }
 
