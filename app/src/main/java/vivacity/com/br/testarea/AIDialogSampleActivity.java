@@ -73,12 +73,10 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
         final Result resultado = result.getResult();
         Log.i(TAG, "Resolved query: " + resultado.getResolvedQuery());
 
-        // Get action
-        Log.i(TAG, "Action: " + resultado.getAction());
-
-        // Get actionIncomplete
-        boolean actionIncomplete = resultado.isActionIncomplete();
-        Log.i(TAG, "ActionIncomplete: " + actionIncomplete);
+        // Get action, actionIncomplete and handle it.
+        final String action = resultado.getAction();
+        final boolean actionIncomplete = resultado.isActionIncomplete();
+        handleAction(action, actionIncomplete);
 
         // Get speech
         final String speech = resultado.getFulfillment().getSpeech();
@@ -195,6 +193,71 @@ public class AIDialogSampleActivity extends AppCompatActivity implements AIDialo
              que uma entrada contendo a chave e seu respectivo valor.*/
             for (final Map.Entry<String, JsonElement> entry : parameters.entrySet()) {
                 Log.i(TAG, String.format("%s: %s", entry.getKey(), entry.getValue().toString()));
+            }
+        }
+    }
+
+    /**
+     * Método responsável por lidar com a ação desencadeada, pela intent, quando completa
+     *
+     * @param action           - {@link String} representa a ação da intent desencadeada.
+     * @param actionIncomplete - {@code boolean} indica se a ação está incompleta
+     */
+    private void handleAction(@NonNull final String action, final boolean actionIncomplete) {
+
+        Log.i(TAG, "Action: " + action);
+        Log.i(TAG, "ActionIncomplete: " + actionIncomplete);
+
+        // Se a ação foi completada
+        if (!actionIncomplete) {
+            switch (action) {
+                case "input.unknown":
+                    Toast.makeText(getApplicationContext(), "Unknown..", Toast.LENGTH_SHORT)
+                            .show();
+                    break;
+                case "input.welcome":
+                    Toast.makeText(getApplicationContext(), "Welcome..", Toast.LENGTH_SHORT)
+                            .show();
+                    break;
+                case "input.despedida":
+                    Toast.makeText(getApplicationContext(), "Despedida..", Toast.LENGTH_SHORT)
+                            .show();
+                    break;
+
+                case "forecast_weather":
+                    Toast.makeText(getApplicationContext(), "Previsão do tempo",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "saber_humidade":
+                    Toast.makeText(getApplicationContext(), "Humidade do ar",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "prever_chuva":
+                    Toast.makeText(getApplicationContext(), "Previsão de chuva",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "saber_sensacao_termica":
+                    Toast.makeText(getApplicationContext(), "Sensação térmica",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "saber_temperatura":
+                    Toast.makeText(getApplicationContext(), "Temperatura",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "saber_dados_do_vento":
+                    Toast.makeText(getApplicationContext(), "Dados do vento",
+                            Toast.LENGTH_SHORT).show();
+
+                    break;
+                case "play_media":
+                    Toast.makeText(getApplicationContext(), "Reproduzir mídia",
+                            Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     }
